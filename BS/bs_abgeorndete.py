@@ -26,10 +26,11 @@ for table in tables:
                     names.append(name)
                 elif scnd_counter == 3:
                     party = entry.text
+                    party = party.strip("\n")
                     parties.append(party)
                 scnd_counter += 1
 
-print(names)
+print(parties)
 
 
 
