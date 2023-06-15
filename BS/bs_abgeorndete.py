@@ -6,9 +6,11 @@ import pandas as pd
 class Scraper:
     names = []
     parties = []
-    email = []
+    emails = []
+    surnames = []
+    lastnames= []
 
-    def __init__():
+    def __init__(self):
         source = requests.get("https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(20._Wahlperiode)").text
         soup = BeautifulSoup(source, "lxml")
         tables = soup.find_all("table")
@@ -45,10 +47,16 @@ class Scraper:
                 f.write(name + ",\n")
     
     def split_names_into_sur_and_last_name(self, names):
-        pass
+        for name in names:
+            surname, lastname = name.split(" ", 1)
+            Scraper.surnames.append(surname)
+            Scraper.lastnames.append(lastname)
+            
 
-name_party_mail_df = pd.DataFrame({"Name": })
-
+if __name__ == "__main__":
+    scraper = Scraper()
+    scraper.split_names_into_sur_and_last_name(Scraper.names)
+    
 
 
 
