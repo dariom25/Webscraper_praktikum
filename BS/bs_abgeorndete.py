@@ -56,11 +56,12 @@ class Scraper:
     def create_personal_email_adress(self, surnames, lastnames, mailextension):
         for surname, lastname in zip(surnames, lastnames):
             email = surname.lower() + "." + lastname.lower() + mailextension
-            print(email)
+            Scraper.emails.append(email)
     
     def load_data_into_dataframe(self, surname, lastname, party, email):
         pass
         
+# TODO: Sonderfälle: Umlaute (ö,ä,ü); doppelnamen; Sonderzeichen; ß / ss;  
 
 if __name__ == "__main__":
     scraper = Scraper()
