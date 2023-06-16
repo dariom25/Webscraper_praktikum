@@ -67,13 +67,9 @@ class Scraper:
         self.replace_special_characters_in_surnames("ă", "a", self.edited_surnames)
         self.replace_special_characters_in_surnames("č", "c", self.edited_surnames)
         self.replace_special_characters_in_surnames("ç", "c", self.edited_surnames)
-
-         	
         
 
 
-        
-        
         for surname, lastname in zip(surnames, lastnames):
             email = surname.lower() + "." + lastname.lower() + mailextension
             Scraper.emails.append(email)
@@ -85,6 +81,13 @@ class Scraper:
             self.edited_surnames.append(edited_name)
         print(self.edited_surnames)
         return self.edited_surnames
+    
+    def replace_special_characters_in_lastnames(self, character, replacement, names):
+        self.edited_lastnames = []
+        for name in names:
+            edited_name = name.replace(character, replacement)
+            self.edited_surnames.append(edited_name)
+        return self.edited_lastnames
 
     
     def load_data_into_dataframe(self, surname, lastname, party, email):
