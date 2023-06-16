@@ -56,6 +56,20 @@ class Scraper:
             Scraper.lastnames.append(lastname)
     
     def create_personal_email_adress(self, surnames, lastnames, mailextension):        
+        self.replace_special_characters_in_surnames("ö", "oe", surnames)
+        self.replace_special_characters_in_surnames("ü", "ue", self.edited_surnames)
+        self.replace_special_characters_in_surnames("ä", "ae", self.edited_surnames)
+        self.replace_special_characters_in_surnames("é", "e", self.edited_surnames)        
+        self.replace_special_characters_in_surnames("ğ", "g", self.edited_surnames)
+        self.replace_special_characters_in_surnames("ó", "o", self.edited_surnames)
+        self.replace_special_characters_in_surnames("ò", "o", self.edited_surnames)
+        self.replace_special_characters_in_surnames("ß", "ss", self.edited_surnames)
+        self.replace_special_characters_in_surnames("ă", "a", self.edited_surnames)
+        self.replace_special_characters_in_surnames("č", "c", self.edited_surnames)
+        self.replace_special_characters_in_surnames("ç", "c", self.edited_surnames)
+
+         	
+        
 
 
         
@@ -77,6 +91,11 @@ class Scraper:
         pass
         
 # TODO: Sonderfälle: Umlaute (ö,ä,ü); doppelnamen; Sonderzeichen; ß / ss;  
+# TODO: Anzupassen: Doppelte Vornamen und Nachnahmen --> richtig getrennt? Mail korrekt?
+# doppelte nachnamen mit bindestrich werden normal in die mailadresse aufgenommen
+# doppelte nachnahme ohne bindestrich werden zusammengeschrieben (de ridder -> deridder)
+# doppelte vornamen mit bindestrich, kommen mit bindestrich in mail (hans-peter)
+# ß zu ss
 
 if __name__ == "__main__":
     scraper = Scraper()
