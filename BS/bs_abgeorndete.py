@@ -68,10 +68,22 @@ class Scraper:
         self.replace_special_characters_in_surnames("č", "c", self.edited_surnames)
         self.replace_special_characters_in_surnames("ç", "c", self.edited_surnames)
         
+        self.replace_special_characters_in_lastnames("ö", "oe", lastnames)
+        self.replace_special_characters_in_lastnames("ü", "ue", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("ä", "ae", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("é", "e", self.edited_lastnames)        
+        self.replace_special_characters_in_lastnames("ğ", "g", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("ó", "o", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("ò", "o", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("ß", "ss", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("ă", "a", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("č", "c", self.edited_lastnames)
+        self.replace_special_characters_in_lastnames("ç", "c", self.edited_lastnames)
 
 
-        for surname, lastname in zip(surnames, lastnames):
+        for surname, lastname in zip(self.edited_surnames, self.edited_lastnames): # irgendwie will er hier keine mailadressen draus machen --> debugger
             email = surname.lower() + "." + lastname.lower() + mailextension
+
             Scraper.emails.append(email)
     
     def replace_special_characters_in_surnames(self, character, replacement, names):
@@ -79,14 +91,13 @@ class Scraper:
         for name in names:
             edited_name = name.replace(character, replacement)
             self.edited_surnames.append(edited_name)
-        print(self.edited_surnames)
         return self.edited_surnames
     
     def replace_special_characters_in_lastnames(self, character, replacement, names):
         self.edited_lastnames = []
         for name in names:
             edited_name = name.replace(character, replacement)
-            self.edited_surnames.append(edited_name)
+            self.edited_lastnames.append(edited_name)
         return self.edited_lastnames
 
     
@@ -104,6 +115,7 @@ if __name__ == "__main__":
     scraper = Scraper()
     scraper.split_names_into_sur_and_last_name(Scraper.names)
     scraper.create_personal_email_adress(Scraper.surnames, Scraper.lastnames, Scraper.mailextension)
+    print(scraper.emails) 
     
 
 
