@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
+import re
 
 
 class Scraper:
@@ -10,6 +11,7 @@ class Scraper:
     surnames = []
     lastnames= []
     mailextension = "@bundestag.de"
+
 
     def __init__(self):
         source = requests.get("https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(20._Wahlperiode)").text
@@ -53,10 +55,23 @@ class Scraper:
             Scraper.surnames.append(surname)
             Scraper.lastnames.append(lastname)
     
-    def create_personal_email_adress(self, surnames, lastnames, mailextension):
+    def create_personal_email_adress(self, surnames, lastnames, mailextension):        
+
+
+        
+        
         for surname, lastname in zip(surnames, lastnames):
             email = surname.lower() + "." + lastname.lower() + mailextension
             Scraper.emails.append(email)
+    
+    def replace_special_characters_in_surnames(self, character, replacement, names):
+        self.edited_surnames = []
+        for name in names:
+            edited_name = name.replace(character, replacement)
+            self.edited_surnames.append(edited_name)
+        print(self.edited_surnames)
+        return self.edited_surnames
+
     
     def load_data_into_dataframe(self, surname, lastname, party, email):
         pass
@@ -67,6 +82,7 @@ if __name__ == "__main__":
     scraper = Scraper()
     scraper.split_names_into_sur_and_last_name(Scraper.names)
     scraper.create_personal_email_adress(Scraper.surnames, Scraper.lastnames, Scraper.mailextension)
+    
 
 
 
