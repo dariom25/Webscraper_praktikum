@@ -9,13 +9,14 @@ class Scraper:
     emails = []
     surnames = []
     lastnames= []
+    mailextension = "@bundestag.de"
 
     def __init__(self):
         source = requests.get("https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(20._Wahlperiode)").text
         soup = BeautifulSoup(source, "lxml")
         tables = soup.find_all("table")
-        counter = 0
         
+        counter = 0
         for table in tables:
             counter += 1
             if counter == 3:
@@ -51,12 +52,20 @@ class Scraper:
             surname, lastname = name.split(" ", 1)
             Scraper.surnames.append(surname)
             Scraper.lastnames.append(lastname)
-            
+    
+    def create_personal_email_adress(self, surnames, lastnames, mailextension):
+        for surname, lastname in zip(surnames, lastnames):
+            email = surname.lower() + "." + lastname.lower() + mailextension
+            print(email)
+    
+    def load_data_into_dataframe(self, surname, lastname, party, email):
+        pass
+        
 
 if __name__ == "__main__":
     scraper = Scraper()
     scraper.split_names_into_sur_and_last_name(Scraper.names)
-    
+    scraper.create_personal_email_adress(Scraper.surnames, Scraper.lastnames, Scraper.mailextension)
 
 
 
