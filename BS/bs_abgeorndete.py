@@ -81,7 +81,7 @@ class Scraper:
         self.replace_special_characters_in_lastnames("ç", "c", self.edited_lastnames)
 
 
-        for surname, lastname in zip(self.edited_surnames, self.edited_lastnames): # irgendwie will er hier keine mailadressen draus machen --> debugger
+        for surname, lastname in zip(self.edited_surnames, self.edited_lastnames):
             email = surname.lower() + "." + lastname.lower() + mailextension
 
             Scraper.emails.append(email)
@@ -102,7 +102,11 @@ class Scraper:
 
     
     def load_data_into_dataframe(self, surname, lastname, party, email):
-        pass
+        self.abgeordnete_df = pd.DataFrame({"Vorname": surname, "Nachname": lastname, "Partei": party, "Emailadresse": email})
+        return self.abgeordnete_df
+    
+    def export_to_excel(self, dataframe):
+        dataframe.to_excel("Abgeordnete_Budestag.xlsx", sheet_name='Sheet_name_1')
         
 # TODO: Sonderfälle: Umlaute (ö,ä,ü); doppelnamen; Sonderzeichen; ß / ss;  
 # TODO: Anzupassen: Doppelte Vornamen und Nachnahmen --> richtig getrennt? Mail korrekt?
@@ -115,7 +119,8 @@ if __name__ == "__main__":
     scraper = Scraper()
     scraper.split_names_into_sur_and_last_name(Scraper.names)
     scraper.create_personal_email_adress(Scraper.surnames, Scraper.lastnames, Scraper.mailextension)
-    print(scraper.emails) 
+    scraper.load_data_into_dataframe(Scraper.surnames, Scraper.lastnames, Scraper.parties, Scraper.emails)
+    scraper.export_to_excel(scraper.abgeordnete_df)
     
 
 
