@@ -14,6 +14,9 @@ class Scraper:
 
 
     def __init__(self):
+        pass
+    
+    def webscraping(self):
         source = requests.get("https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(20._Wahlperiode)").text
         soup = BeautifulSoup(source, "lxml")
         tables = soup.find_all("table")
@@ -105,15 +108,20 @@ class Scraper:
         self.abgeordnete_df = pd.DataFrame({"Vorname": surname, "Nachname": lastname, "Partei": party, "Emailadresse": email})
         return self.abgeordnete_df
     
-    def export_to_excel(self, dataframe):
-        dataframe.to_excel("Abgeordnete_Budestag.xlsx", sheet_name='Sheet_name_1')
+    def export_to_excel(self, dataframe, filename):
+        dataframe.to_excel(filename, sheet_name='Sheet_name_1')
+        
+    def load_data_from_excel(self, file):
+        self.file_df = pd.read_excel(file)
+        return self.file_df
         
 # TODO: Sonderfälle: Umlaute (ö,ä,ü); doppelnamen; Sonderzeichen; ß / ss;  
 # TODO: Anzupassen: Doppelte Vornamen und Nachnahmen --> richtig getrennt? Mail korrekt?
 # doppelte nachnamen mit bindestrich werden normal in die mailadresse aufgenommen
 # doppelte nachnahme ohne bindestrich werden zusammengeschrieben (de ridder -> deridder)
 # doppelte vornamen mit bindestrich, kommen mit bindestrich in mail (hans-peter)
-# ß zu ss
+# ß zu ss 
+# c mit strich drüber fehlt noch !!!
 
 
     
