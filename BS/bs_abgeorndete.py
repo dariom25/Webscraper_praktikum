@@ -10,7 +10,7 @@ class Scraper:
     emails = []
     surnames = []
     lastnames= []
-    mailextension = "@bundestag.de"
+    mailextension = "@landtag.nrw.de"
 
 
     def __init__(self):
@@ -54,7 +54,7 @@ class Scraper:
     
     def split_names_into_sur_and_last_name(self, names):
         for name in names:
-            surname, lastname = name.split(" ", 1)
+            lastname, surname = name.split(",")
             Scraper.surnames.append(surname)
             Scraper.lastnames.append(lastname)
     
@@ -114,7 +114,20 @@ class Scraper:
     def load_data_from_excel(self, file):
         self.file_df = pd.read_excel(file)
         return self.file_df
-        
+    
+    def select_column(self):
+        self.names = self.file_df["Name"]
+        return self.names
+    
+    def add_party_to_a_list(self):
+        parties = self.file_df["Fraktion"]
+        for party in parties:
+            Scraper.parties.append(party)
+    
+
+    
+    
+    
 # TODO: Sonderfälle: Umlaute (ö,ä,ü); doppelnamen; Sonderzeichen; ß / ss;  
 # TODO: Anzupassen: Doppelte Vornamen und Nachnahmen --> richtig getrennt? Mail korrekt?
 # doppelte nachnamen mit bindestrich werden normal in die mailadresse aufgenommen
