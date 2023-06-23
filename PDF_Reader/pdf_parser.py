@@ -1,23 +1,15 @@
-import PyPDF2
+from PyPDF2 import PdfReader
 
- 
+abgeordnete = []
 
-with open('example.pdf', 'rb') as pdf_file:
+reader = PdfReader("Abgeordnetenportraits_RLP.pdf")
+number_of_pages = len(reader.pages)
 
-    read_pdf = PyPDF2.PdfFileReader(pdf_file)
+for site in range(118):
+    pass
 
-    number_of_pages = read_pdf.getNumPages()
-
-    pages_to_parse = 2
-
-    if pages_to_parse > number_of_pages:
-
-        pages_to_parse = number_of_pages
-
-    for i in range(pages_to_parse):
-
-        page = read_pdf.getPage(i)
-
-        page_content = page.extractText()
-
-        print(page_content)
+page = reader.pages[21]
+text = page.extract_text()
+abgeordnete.append(text)
+abgeordnete = abgeordnete[0].split("\n")
+print(abgeordnete)
